@@ -1,6 +1,5 @@
 package Project.commands;
 
-
 import Project.exceptions.CommandException;
 
 import java.io.File;
