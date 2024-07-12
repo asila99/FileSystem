@@ -18,7 +18,7 @@ public class CreateCommand implements Command {
         File directory = new File(directoryPath);
 
         if (!directory.exists() || !directory.isDirectory()) {
-            throw new CommandException("Error, enter command one more time.");
+            throw new CommandException("Error, directory is not found.");
         }
 
         File file = new File(directory, fileName);

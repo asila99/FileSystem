@@ -18,12 +18,15 @@ public class CopyCommand implements Command {
         String fileName = parts[0];
         String sourceDirPath = parts[1];
         String targetDirPath = parts[2];
-
         File sourceDir = new File(sourceDirPath);
         File targetDir = new File(targetDirPath);
 
-        if (!sourceDir.exists() || !sourceDir.isDirectory() || !targetDir.exists() || !targetDir.isDirectory()) {
-            throw new CommandException("Error, enter command one more time.");
+        if (!sourceDir.exists() || !sourceDir.isDirectory()) {
+            throw new CommandException("Error, source directory is not found.");
+        }
+
+        if (!targetDir.exists() || !targetDir.isDirectory()) {
+            throw new CommandException("Error, target directory is not found.");
         }
 
         File sourceFile = new File(sourceDir, fileName);

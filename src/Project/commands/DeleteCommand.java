@@ -14,11 +14,19 @@ public class DeleteCommand implements Command {
 
         String fileName = parts[0];
         String directoryPath = parts[1];
-        File file = new File(directoryPath, fileName);
+        File directory = new File(directoryPath);
 
-        if (!file.exists()) {
+        if (!directory.exists() || !directory.isDirectory()) {
+            throw new CommandException("Error, directory is not found.");
+        }
+
+        File file = new File(directory, fileName);
+
+        if (!file.exists() || !file.isFile()) {
             throw new CommandException("Error, file is not found.");
-        } else if (file.delete()) {
+        }
+
+        if (file.delete()) {
             System.out.println("Done, file " + fileName + " is deleted.");
         } else {
             throw new CommandException("Error, could not delete file.");

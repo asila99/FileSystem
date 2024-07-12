@@ -15,13 +15,24 @@ public class RenameCommand implements Command {
         String directoryPath = parts[0];
         String oldFileName = parts[1];
         String newFileName = parts[2];
+        File directory = new File(directoryPath);
 
-        File oldFile = new File(directoryPath, oldFileName);
-        File newFile = new File(directoryPath, newFileName);
+        if (!directory.exists() || !directory.isDirectory()) {
+            throw new CommandException("Error, directory is not found.");
+        }
 
-        if (!oldFile.exists()) {
+        File oldFile = new File(directory, oldFileName);
+        File newFile = new File(directory, newFileName);
+
+        if (!oldFile.exists() || !oldFile.isFile()) {
             throw new CommandException("Error, file is not found.");
-        } else if (oldFile.renameTo(newFile)) {
+        }
+
+        if (newFile.exists()) {
+            throw new CommandException("Error, new file name already exists.");
+        }
+
+        if (oldFile.renameTo(newFile)) {
             System.out.println("Done, file " + oldFileName + " is renamed. New name is " + newFileName);
         } else {
             throw new CommandException("Error, could not rename file.");
